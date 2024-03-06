@@ -1,0 +1,14 @@
+---
+    - hosts: R1
+      gather_facts: no
+      connection: network_cli  
+      tasks: 
+        - name: Loopback config
+          iosxr_config:
+            lines:
+              - Ipv4 address 1.1.1.6/32
+              - commit: yes
+            parents: interface Loopback 0 
+          register: op
+        - debug:
+            msg: "{{op}}"
